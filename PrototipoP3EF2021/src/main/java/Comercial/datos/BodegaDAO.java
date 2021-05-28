@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author Diana
  */
 public class BodegaDAO {
-    private static final String SQL_SELECT = "SELECT PK_id_bodega, nombre_bodega, direccion, codigo_almacen FROM tbl_bodega";
+private static final String SQL_SELECT = "SELECT PK_id_bodega, nombre_bodega, direccion, codigo_almacen FROM tbl_bodega";
 private static final String SQL_INSERT = "INSERT INTO tbl_bodega (PK_id_bodega, nombre_bodega, direccion, codigo_almacen) VALUES(?,?,?,?,?)";
 private static final String SQL_UPDATE = "UPDATE tbl_bodega SET   nombre_bodega= ?, direccion= ?, codigo_almacen= ? WHERE PK_id_bodega= ?";
 private static final String SQL_QUERY = "SELECT PK_id_bodega, nombre_bodega, direccion, codigo_almacen FROM tbl_bodega WHERE PK_id_producto=?";
