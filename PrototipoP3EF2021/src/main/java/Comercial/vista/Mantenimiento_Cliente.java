@@ -45,7 +45,7 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
         modelo.addColumn("Cliente");
         modelo.addColumn("Nit");
         modelo.addColumn("Telefono");
-        modelo.addColumn("Estatis Cliente");
+        modelo.addColumn("Estatus Cliente");
       
 
         ClienteDao ventasDAO = new ClienteDao();

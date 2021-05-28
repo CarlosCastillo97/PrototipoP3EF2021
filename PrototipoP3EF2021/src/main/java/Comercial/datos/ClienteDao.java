@@ -23,13 +23,11 @@ import java.util.List;
  */
 public class ClienteDao {
     
-        private static final String SQL_INSERT = "INSERT INTO tbl_cliente(Id_cliente,cliente,Nit,telefono,Estatus_Cliente) VALUES(?, ?,?, ?,?)";
-    private static final String SQL_SELECT = "SELECT Id_cliente,cliente,Nit,telefono,Estatus_Cliente FROM tbl_cliente";
-    private static final String SQL_QUERY = "SELECT Id_cliente,cliente,Nit,telefono,Estatus_Cliente FROM tbl_cliente WHERE Id_cliente = ?";
-  private static final String SQL_UPDATE = "UPDATE tbl_cliente SET  Id_cliente = ?,cliente =?,Nit= ? , telefono = ?  , Estatus_Cliente = ?  WHERE Id_cliente";
-    private static final String SQL_DELETE = "DELETE FROM tbl_cliente  WHERE Id_cliente = ? ";
-      private static final String SQL_QUERY22 = "SELECT Id_cliente,cliente,Nit,telefono,Estatus_Cliente FROM tbl_cliente WHERE cliente = ?";
-    private static final String SQL_QUERY3 = "SELECT nombre_producto,NuevaExistencia, FROM tbl_proceso_producto WHERE  nombre_producto =?";
+    private static final String SQL_SELECT = "SELECT * FROM tbl_cliente";
+    private static final String SQL_INSERT = "INSERT INTO tbl_cliente(ID, cliente, Nit, Estatus_Cliente, telefono) VALUES(?, ?, ?, ?, ?)";
+    private static final String SQL_UPDATE = "UPDATE tbl_cliente SET ID=?, cliente=?, Nit=?, Estatus_Cliente=?, telefono=? WHERE ID = ?";
+    private static final String SQL_DELETE = "DELETE FROM tbl_cliente WHERE ID=?";
+    private static final String SQL_QUERY = "SELECT ID, cliente, Nit, Estatus_Cliente, telefono FROM tbl_cliente WHERE ID = ?";
      public List<Cliente> select() {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -146,128 +144,6 @@ public class ClienteDao {
         }
        return venta;
  
-
-    
-     }
- public   ProcesoProducto query3(ProcesoProducto venta){
-        /**
-         *
-         * conexion de base de datos
-         */
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        List<ProcesoProducto> ventas = new ArrayList<ProcesoProducto>();
-        int rows = 0;
-
-        try {
-            conn = Conexion.getConnection();
-            System.out.println("Ejecutando query:" + SQL_QUERY3);
-            stmt = conn.prepareStatement(SQL_QUERY3);
-             stmt.setString(1, venta.getNombre_producto());
-             
-          
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                  
-                String nombre  = rs.getString("nombre_producto");
-                String existencia =      rs.getString("NuevaExistencia");
-            
-                /**
-                 *
-                 * concatenacionde de variables de de busqueda
-                 */
-              
-
-                  venta = new ProcesoProducto();
-                  
-                  venta.setNombre_producto(nombre);
-              venta.setNuevaExistencia(existencia);
-             
-               
-                
-                    ventas.add(venta);
-                /**
-                 *
-                 * busqueda de datos de la bitacocora en la de usuarios
-                 */
-                
-               
-            }
-            //System.out.println("Registros buscado:" + vendedor);
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
-        } finally {
-           
-            Conexion.close(stmt);
-            Conexion.close(conn);
-        }
-       return venta;
- 
-
-    
-     }
- 
- 
- public   Cliente query2(Cliente venta){
-        /**
-         *
-         * conexion de base de datos
-         */
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        List<Cliente> ventas = new ArrayList<Cliente>();
-        int rows = 0;
-
-        try {
-            conn = Conexion.getConnection();
-            System.out.println("Ejecutando query:" + SQL_QUERY22);
-            stmt = conn.prepareStatement(SQL_QUERY22);
-             
-                 stmt.setString(1, venta.getCliente());
-          
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-              
-                String cliente  = rs.getString("Cliente");
-                String nit =      rs.getString("Nit");
-                String telefono = rs.getString("telefono");
-                  String id = rs.getString("Id_cliente");
-             
-                /**
-                 *
-                 * concatenacionde de variables de de busqueda
-                 */
-              
-
-                  venta = new Cliente();
-                  venta.setCliente(cliente);
-              venta.setId_cliente(id);
-                 venta.setNit(nit);
-                 venta.setTelefono(telefono);
-               
-                
-                    ventas.add(venta);
-                /**
-                 *
-                 * busqueda de datos de la bitacocora en la de usuarios
-                 */
-                
-               
-            }
-            //System.out.println("Registros buscado:" + vendedor);
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
-        } finally {
-           
-            Conexion.close(stmt);
-            Conexion.close(conn);
-        }
-       return venta;
- 
-
-    
      }
      public int insert(Cliente insertar)  {
          ResultSet rs = null;
@@ -283,9 +159,10 @@ public class ClienteDao {
             stmt.setString(1,  insertar.getId_cliente());
             stmt.setString(2,  insertar.getCliente());       
             stmt.setString(3,   insertar.getNit());
-              stmt.setString(4,  insertar.getTelefono());
+            stmt.setString(4,  insertar.getEstatus_Cliente());
+            stmt.setString(5,  insertar.getTelefono());
           
-                stmt.setString(5,  insertar.getEstatus_Cliente());
+                
        
             System.out.println("ejecutando query:" + SQL_INSERT);
             rows = stmt.executeUpdate();
@@ -309,12 +186,12 @@ public class ClienteDao {
             conn = Conexion.getConnection();
             System.out.println("ejecutando query: " + SQL_UPDATE);
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setString(1,   mod.getId_cliente());
-            stmt.setString(2,   mod.getCliente());       
-            stmt.setString(3,    mod.getNit());
-           
-             stmt.setString(4,   mod.getEstatus_Cliente());
-            stmt.setString(5,   mod.getTelefono());
+            stmt.setString(1,  mod.getId_cliente());
+            stmt.setString(2,  mod.getCliente());       
+            stmt.setString(3,  mod.getNit());
+            stmt.setString(4,  mod.getEstatus_Cliente());
+            stmt.setString(5,  mod.getTelefono());
+            stmt.setString(6,  mod.getId_cliente());
            
    rows = stmt.executeUpdate();
          
